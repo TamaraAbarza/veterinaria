@@ -30,6 +30,26 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
             conexion = new Conexion();
             clienteData = new ClienteData(conexion);
             initComponents();
+            btnBorrar.setEnabled(false);
+            btnModificar.setEnabled(false);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FormularioCliente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+     public FormularioCliente(int dni) {
+
+        try {
+            conexion = new Conexion();
+            clienteData = new ClienteData(conexion);
+            initComponents();
+            btnBorrar.setEnabled(false);
+            btnModificar.setEnabled(false);
+            jtDni.setText(dni+"");
+            jtDniBuscar.setEnabled(false);
+            btnBuscar.setEnabled(false);
+            jLabel.setEnabled(false);
+            jLabelRegistrar.setText("REGISTRE UN NUEVO CLIENTE");
+                    
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(FormularioCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -47,7 +67,7 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jtDniBuscar = new javax.swing.JTextField();
-        bntBuscar = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
         jtNombre = new javax.swing.JTextField();
         jtDni = new javax.swing.JTextField();
@@ -55,7 +75,6 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
         jtTelefono = new javax.swing.JTextField();
         jtContactoA = new javax.swing.JTextField();
         jtDireccion = new javax.swing.JTextField();
-        jcbActivo = new javax.swing.JCheckBox();
         btnGuardar = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
@@ -66,45 +85,97 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        jLabel = new javax.swing.JLabel();
+        jLabelRegistrar = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
 
-        jPanel1.setBackground(new java.awt.Color(218, 229, 208));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel2.setBackground(new java.awt.Color(218, 229, 208));
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(55, 62, 62), 2, true));
 
-        bntBuscar.setBackground(new java.awt.Color(255, 255, 255));
-        bntBuscar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        bntBuscar.setText("Buscar");
-        bntBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntBuscarActionPerformed(evt);
+        jtDniBuscar.setBackground(new java.awt.Color(213, 55, 132));
+        jtDniBuscar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jtDniBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        jtDniBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtDniBuscarKeyTyped(evt);
             }
         });
 
-        jSeparator1.setForeground(new java.awt.Color(102, 102, 102));
+        btnBuscar.setBackground(new java.awt.Color(213, 55, 132));
+        btnBuscar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnBuscar.setForeground(new java.awt.Color(255, 255, 255));
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
-        jtNombre.setFont(new java.awt.Font("Lato", 0, 12)); // NOI18N
+        jSeparator1.setForeground(new java.awt.Color(51, 51, 51));
 
-        jtDni.setFont(new java.awt.Font("Lato", 0, 12)); // NOI18N
+        jtNombre.setBackground(new java.awt.Color(247, 188, 32));
+        jtNombre.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jtNombre.setForeground(new java.awt.Color(255, 255, 255));
+        jtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtNombreKeyTyped(evt);
+            }
+        });
 
-        jtApellido.setFont(new java.awt.Font("Lato", 0, 12)); // NOI18N
+        jtDni.setBackground(new java.awt.Color(247, 188, 32));
+        jtDni.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jtDni.setForeground(new java.awt.Color(255, 255, 255));
+        jtDni.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtDniKeyTyped(evt);
+            }
+        });
 
-        jtTelefono.setFont(new java.awt.Font("Lato", 0, 12)); // NOI18N
+        jtApellido.setBackground(new java.awt.Color(247, 188, 32));
+        jtApellido.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jtApellido.setForeground(new java.awt.Color(255, 255, 255));
+        jtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtApellidoKeyTyped(evt);
+            }
+        });
 
-        jtContactoA.setFont(new java.awt.Font("Lato", 0, 12)); // NOI18N
+        jtTelefono.setBackground(new java.awt.Color(247, 188, 32));
+        jtTelefono.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jtTelefono.setForeground(new java.awt.Color(255, 255, 255));
+        jtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtTelefonoKeyTyped(evt);
+            }
+        });
 
-        jtDireccion.setFont(new java.awt.Font("Lato", 0, 12)); // NOI18N
+        jtContactoA.setBackground(new java.awt.Color(247, 188, 32));
+        jtContactoA.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jtContactoA.setForeground(new java.awt.Color(255, 255, 255));
+        jtContactoA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jtContactoAKeyTyped(evt);
+            }
+        });
 
-        jcbActivo.setBackground(new java.awt.Color(218, 229, 208));
-        jcbActivo.setFont(new java.awt.Font("Lato", 1, 12)); // NOI18N
-        jcbActivo.setText("Activo");
+        jtDireccion.setBackground(new java.awt.Color(247, 188, 32));
+        jtDireccion.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jtDireccion.setForeground(new java.awt.Color(255, 255, 255));
 
-        btnGuardar.setBackground(new java.awt.Color(255, 255, 255));
+        btnGuardar.setBackground(new java.awt.Color(36, 130, 186));
         btnGuardar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -112,8 +183,9 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        btnBorrar.setBackground(new java.awt.Color(255, 255, 255));
+        btnBorrar.setBackground(new java.awt.Color(36, 130, 186));
         btnBorrar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnBorrar.setForeground(new java.awt.Color(255, 255, 255));
         btnBorrar.setText("Borrar");
         btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,8 +193,9 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        btnModificar.setBackground(new java.awt.Color(255, 255, 255));
+        btnModificar.setBackground(new java.awt.Color(36, 130, 186));
         btnModificar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnModificar.setForeground(new java.awt.Color(255, 255, 255));
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -130,8 +203,9 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
             }
         });
 
-        btnLimpiar.setBackground(new java.awt.Color(255, 255, 255));
+        btnLimpiar.setBackground(new java.awt.Color(36, 130, 186));
         btnLimpiar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btnLimpiar.setForeground(new java.awt.Color(255, 255, 255));
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,7 +214,7 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
         });
 
         jLabel1.setFont(new java.awt.Font("Lato", 1, 12)); // NOI18N
-        jLabel1.setText("NOMBRE  DE  UN  CONTACTO  ALTERNATIVO");
+        jLabel1.setText("TELÉFONO DE  UN  CONTACTO  ALTERNATIVO");
 
         jLabel2.setFont(new java.awt.Font("Lato", 1, 12)); // NOI18N
         jLabel2.setText("DIRECCIÓN");
@@ -157,8 +231,11 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Lato", 1, 12)); // NOI18N
         jLabel6.setText("NOMBRE");
 
-        jLabel7.setFont(new java.awt.Font("Lato", 1, 12)); // NOI18N
-        jLabel7.setText("DNI");
+        jLabel.setFont(new java.awt.Font("Lato", 1, 12)); // NOI18N
+        jLabel.setText("INGRESE  SU  DNI  PARA  OBTENER  SUS  DATOS");
+
+        jLabelRegistrar.setFont(new java.awt.Font("Lato", 1, 12)); // NOI18N
+        jLabelRegistrar.setText("O REGISTRE UN NUEVO CLIENTE");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -167,10 +244,14 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jtDniBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(bntBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jtDniBuscar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(29, 29, 29))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -179,39 +260,39 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel5)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel7)
-                            .addComponent(jcbActivo)
+                            .addComponent(jLabel)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(14, 14, 14)
                                     .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                     .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addComponent(jtContactoA, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jtDireccion, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jtTelefono, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jtDni, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jtApellido, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jtNombre, javax.swing.GroupLayout.Alignment.LEADING)))
-                        .addGap(0, 65, Short.MAX_VALUE)))
-                .addContainerGap(37, Short.MAX_VALUE))
+                                .addComponent(jtNombre, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(jLabelRegistrar, javax.swing.GroupLayout.PREFERRED_SIZE, 283, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(56, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(16, 16, 16)
+                .addComponent(jLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jtDniBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bntBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabelRegistrar)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -236,61 +317,106 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jtContactoA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jcbActivo)
-                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBorrar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(53, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(55, 62, 62), 2, true));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel9.setFont(new java.awt.Font("AngsanaUPC", 0, 36)); // NOI18N
-        jLabel9.setText("CLIENTE");
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/veterinaria/vistas/imagenes/logo2.jpg"))); // NOI18N
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 4, -1, -1));
 
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/veterinaria/vistas/imagenes/edit.jpg"))); // NOI18N
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        jLabel15.setFont(new java.awt.Font("AngsanaUPC", 0, 45)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(247, 188, 32));
+        jLabel15.setText(" C");
+
+        jLabel16.setFont(new java.awt.Font("AngsanaUPC", 0, 45)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(36, 130, 186));
+        jLabel16.setText("L");
+
+        jLabel17.setFont(new java.awt.Font("AngsanaUPC", 0, 45)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(213, 55, 132));
+        jLabel17.setText("I");
+
+        jLabel19.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel19.setFont(new java.awt.Font("AngsanaUPC", 0, 45)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(247, 188, 32));
+        jLabel19.setText("E");
+
+        jLabel18.setFont(new java.awt.Font("AngsanaUPC", 0, 45)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(36, 130, 186));
+        jLabel18.setText("N");
+
+        jLabel20.setFont(new java.awt.Font("AngsanaUPC", 0, 45)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(213, 55, 132));
+        jLabel20.setText("T");
+
+        jLabel21.setFont(new java.awt.Font("AngsanaUPC", 0, 45)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(247, 188, 32));
+        jLabel21.setText("E");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel19)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel20)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel21)
+                .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel8))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel16)
+                    .addComponent(jLabel17)
+                    .addComponent(jLabel19)
+                    .addComponent(jLabel18)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel21)))
         );
+
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(64, 2, 170, -1));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(223, 223, 223)
+                .addGap(453, 453, 453)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(208, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(453, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(3, 3, 3)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -302,14 +428,15 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(1, 1, 1))
+                .addGap(20, 20, 20))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bntBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntBuscarActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         int dni = Integer.parseInt(jtDniBuscar.getText());
         Cliente cliente = clienteData.buscarClienteDni(dni);
         if (!(cliente == null)) {
@@ -318,12 +445,17 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
             jtDni.setText(cliente.getDni() + "");
             jtTelefono.setText(cliente.getTelefono() + "");
             jtDireccion.setText(cliente.getDireccion());
-            jtContactoA.setText(cliente.getContactoAlternativo()+"");
-            jcbActivo.setSelected(cliente.isActivo());
+            jtContactoA.setText(cliente.getContactoAlternativo() + "");
+//            jcbActivo.setSelected(cliente.isActivo());
+
+            btnBorrar.setEnabled(true);
+            btnModificar.setEnabled(true);
+            btnGuardar.setEnabled(false);
+            jLabelRegistrar.setVisible(false);
         } else {
-            JOptionPane.showMessageDialog(this, "Usted no está registrado. Ingrese sus datos para registrarse");
+            JOptionPane.showMessageDialog(this, "El DNI que ingresó no corresponde a ningún cliente registrado. Ingrese sus datos para registrarse.");
         }
-    }//GEN-LAST:event_bntBuscarActionPerformed
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limpiar();
@@ -332,14 +464,36 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         String nombre = jtNombre.getText();
         String apellido = jtApellido.getText();
-        int dni = Integer.parseInt(jtDni.getText());
-        Long telefono = Long.parseLong(jtTelefono.getText());
-        String direccion =jtDireccion.getText();
-        Long contacto = Long.parseLong(jtContactoA.getText());
-        boolean activo = jcbActivo.isSelected();
-        
-        Cliente cliente= new Cliente(dni, nombre, apellido, telefono, direccion, contacto, activo);
-        clienteData.guardarCliente(cliente);
+        String direccion = jtDireccion.getText();
+        boolean activo = true;//jcbActivo.isSelected();
+        try {
+            int dni = Integer.parseInt(jtDni.getText());
+            Long contacto = Long.parseLong(jtContactoA.getText());
+            Long telefono = Long.parseLong(jtTelefono.getText());
+            if (jtNombre.getText().isEmpty() || jtApellido.getText().isEmpty() || jtDni.getText().isEmpty() || jtTelefono.getText().isEmpty() || jtDireccion.getText().isEmpty() || jtContactoA.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Para realizar el registro es necesario que complete todos los campos.");
+            } else {
+                Cliente cliente = new Cliente(dni, nombre, apellido, telefono, direccion, contacto, activo);
+                boolean aux = clienteData.guardarCliente(cliente);
+                if (aux) {
+                    int confirmar = JOptionPane.showConfirmDialog(this,  "Se registró al cliente correctamente. ¿Desea agregar una mascota para "+cliente+"?" );
+                    if (confirmar == 0) {
+                        FormularioMascota fm = new FormularioMascota();
+                        Principal.fondo.add(fm);
+                        fm.toFront();
+                        fm.setVisible(true);
+                        this.dispose();
+                    }
+                    limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar registrar al cliente " + cliente);
+                }
+
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Para realizar el registro es necesario que complete todos los campos.");
+        }
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -352,24 +506,96 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
             long telefono = Long.parseLong(jtTelefono.getText());
             String direccion = jtDireccion.getText();
             Long contacto = Long.parseLong(jtContactoA.getText());
-            boolean activo = jcbActivo.isSelected();
-            
-            Cliente clienteM= new Cliente(dni, nombre, apellido, telefono, direccion, contacto, activo);
-            clienteData.modificarCliente(cliente);
+            boolean activo = true; //jcbActivo.isSelected();
+
+            if (jtNombre.getText().isEmpty() || jtApellido.getText().isEmpty() || jtDni.getText().isEmpty() || jtTelefono.getText().isEmpty() || jtDireccion.getText().isEmpty() || jtContactoA.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Para realizar la modificación se necesita que complete todos los campos");
+            } else {
+                Cliente clienteM = new Cliente(cliente.getIdCliente(), dni, nombre, apellido, telefono, direccion, contacto, activo);
+                boolean aux = clienteData.modificarCliente(clienteM);
+                if (aux) {
+                    JOptionPane.showMessageDialog(this, "Se modificó correctamente al cliente " + cliente);
+                    limpiar();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Error al intentar modificar al cliente " + cliente);
+                }
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Usted no está registrado. Ingrese sus datos para registrarse");
         }
-        
+
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        // TODO add your handling code here:
+
         int dni = Integer.parseInt(jtDniBuscar.getText());
         Cliente cliente = clienteData.buscarClienteDni(dni);
         if (!(cliente == null)) {
-            clienteData.borrarCliente(cliente.getIdCliente());
+            //cancelar=2 , no =1 , si=0
+            int confirmar = JOptionPane.showConfirmDialog(this, "¿Está seguro de darle de baja al cliente " + cliente + "?");
+            if (confirmar == 0) {
+                boolean aux = clienteData.borrarCliente(cliente.getIdCliente());
+                if (aux) {
+                    JOptionPane.showMessageDialog(this, "Se dio de baja correctamente al cliente " + cliente);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar darle de baja al cliente " + cliente);
+                }
+                limpiar();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Error, el dni ingresado no corresponde a ningun cliente registrado");
         }
     }//GEN-LAST:event_btnBorrarActionPerformed
+
+    private void jtDniBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtDniBuscarKeyTyped
+
+        //permite solo ingresar numeros
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtDniBuscarKeyTyped
+
+    private void jtDniKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtDniKeyTyped
+
+        //permite solo ingresar numeros
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtDniKeyTyped
+
+    private void jtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtTelefonoKeyTyped
+        //permite solo ingresar numeros
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtTelefonoKeyTyped
+
+    private void jtContactoAKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtContactoAKeyTyped
+        //permite solo ingresar numeros
+        char c = evt.getKeyChar();
+        if (c < '0' || c > '9') {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtContactoAKeyTyped
+
+    private void jtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtNombreKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != ' ')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtNombreKeyTyped
+
+    private void jtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtApellidoKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if ((c < 'a' || c > 'z') && (c < 'A' || c > 'Z') && (c != ' ')) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_jtApellidoKeyTyped
     public void limpiar() {
         jtNombre.setText("");
         jtApellido.setText("");
@@ -377,29 +603,42 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
         jtTelefono.setText("");
         jtDireccion.setText("");
         jtContactoA.setText("");
-        jcbActivo.setSelected(false);
+//        jcbActivo.setSelected(false);
+        jtDniBuscar.setText("");
+
+        btnBorrar.setEnabled(false);
+        btnModificar.setEnabled(false);
+        btnGuardar.setEnabled(true);
+        jLabelRegistrar.setVisible(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntBuscar;
     private javax.swing.JButton btnBorrar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnModificar;
+    private javax.swing.JLabel jLabel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelRegistrar;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JCheckBox jcbActivo;
     private javax.swing.JTextField jtApellido;
     private javax.swing.JTextField jtContactoA;
     private javax.swing.JTextField jtDireccion;

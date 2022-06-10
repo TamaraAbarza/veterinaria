@@ -39,23 +39,19 @@ public class ClienteData {
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();
 
-            JOptionPane.showMessageDialog(null, " Se agregó al cliente " + cliente + " correctamente");
+//            JOptionPane.showMessageDialog(null, " Se agregó al cliente " + cliente + " correctamente");
 
             if (rs.next()) {
                 cliente.setIdCliente(rs.getInt(1));
             } else {
 
-                JOptionPane.showMessageDialog(null, "Error al intentar agregar al cliente");
+//                JOptionPane.showMessageDialog(null, "Error al intentar agregar al cliente");
                 insert = false;
             }
             ps.close();
         } catch (SQLException ex) {
-            if (!(buscarCliente(cliente.getDni()) == null)) {
-                JOptionPane.showMessageDialog(null, "Error. El dni ingresado ya existe, corresponde al cliente " + cliente);
-            } else {
-                JOptionPane.showMessageDialog(null, "Error de conexion desde insertar cliente " + ex);
-            }
-
+            insert=false;
+                JOptionPane.showMessageDialog(null, "Error. El dni ingresado ya existe, corresponde al cliente " + cliente+ ": "+ex);
         }
         return insert;
     }
@@ -88,9 +84,9 @@ public class ClienteData {
         }
 
         if (cliente != null) {
-            JOptionPane.showMessageDialog(null, "Se encontró al cliente " + cliente);
+//            JOptionPane.showMessageDialog(null, "Se encontró al cliente " + cliente);
         } else {
-            JOptionPane.showMessageDialog(null, "Error, no existe el cliente que intenta buscar");
+//            JOptionPane.showMessageDialog(null, "Error, no existe el cliente que intenta buscar");
         }
         return cliente;
     }
@@ -105,10 +101,10 @@ public class ClienteData {
             int rs = ps.executeUpdate();
 
             if (rs > 0) {
-                JOptionPane.showMessageDialog(null, "Se borró al cliente ");
+//                JOptionPane.showMessageDialog(null, "Se borró al cliente ");
                 borrar = true;
             } else {
-                JOptionPane.showMessageDialog(null, "Error, el cliente no existe ");
+//                JOptionPane.showMessageDialog(null, "Error, el cliente no existe ");
             }
             ps.close();
         } catch (SQLException ex) {
@@ -136,9 +132,9 @@ public class ClienteData {
 
             if (rs > 0) {
                 modificar = true;
-                JOptionPane.showMessageDialog(null, "Se modifico correctamente al cliente " + cliente);
+//                JOptionPane.showMessageDialog(null, "Se modifico correctamente al cliente " + cliente);
             } else {
-                JOptionPane.showMessageDialog(null, "Error, no se pudo modificar al cliente. El cliente que intenta modifcar no existe ");
+//                JOptionPane.showMessageDialog(null, "Error, no se pudo modificar al cliente. El cliente que intenta modifcar no existe ");
             }
             ps.close();
         } catch (SQLException ex) {
@@ -159,9 +155,9 @@ public class ClienteData {
 
             if (rs > 0) {
                 activar = true;
-                JOptionPane.showMessageDialog(null, "Se activo el estado del cliente ");
+//                JOptionPane.showMessageDialog(null, "Se activo el estado del cliente ");
             } else {
-                JOptionPane.showMessageDialog(null, "Error, el cliente no existe");
+//                JOptionPane.showMessageDialog(null, "Error, el cliente no existe");
             }
 
             ps.close();
@@ -216,7 +212,7 @@ public class ClienteData {
             while (rs.next()) {
                 cliente = new Cliente();
                 cliente.setIdCliente(rs.getInt("idCliente"));
-                cliente.setDireccion(rs.getString("dni"));
+                cliente.setDni(rs.getInt("dni"));
                 cliente.setNombre(rs.getString("nombre"));
                 cliente.setApellido(rs.getString("apellido"));
                 cliente.setTelefono(rs.getLong("telefono"));
@@ -230,10 +226,39 @@ public class ClienteData {
         }
 
         if (cliente != null) {
-            JOptionPane.showMessageDialog(null, "Se encontró al cliente " + cliente);
+//            JOptionPane.showMessageDialog(null, "Se encontró al cliente " + cliente);
         } else {
-            JOptionPane.showMessageDialog(null, "Error, no existe el cliente que intenta buscar");
+//            JOptionPane.showMessageDialog(null, "Error, no existe el cliente que intenta buscar");
         }
         return cliente;
+    }
+    
+    public List<Cliente> obtenerClientesInactivos() {
+        ArrayList<Cliente> clientes = new ArrayList<Cliente>();
+
+        try {
+            String sql = "SELECT * FROM cliente WHERE activo=0;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            Cliente cliente;
+            while (rs.next()) {
+                cliente = new Cliente();
+                cliente.setIdCliente(rs.getInt("idCliente"));
+                cliente.setDireccion(rs.getString("dni"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
+                cliente.setTelefono(rs.getLong("telefono"));
+                cliente.setDireccion(rs.getString("direccion"));
+                cliente.setContactoAlternativo(rs.getLong("contactoAlternativo"));
+                cliente.setActivo(rs.getBoolean("activo"));
+
+                clientes.add(cliente);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al obtener los clientes: " + ex.getMessage());
+        }
+
+        return clientes;
     }
 }

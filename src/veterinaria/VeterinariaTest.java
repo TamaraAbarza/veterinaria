@@ -187,6 +187,10 @@ public class VeterinariaTest {
 //            //PRUEBO EL PESO ACTUAL
 //            System.out.println(visitaData.PesoActual(4));
 
+//VISITAS POR FECHA
+//            List<Visita> v = visitaData.obtenerVisitasxFecha("2022-04-15","2022-06-02");
+//            System.out.println(v);
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(VeterinariaTest.class.getName()).log(Level.SEVERE, null, ex);
         }

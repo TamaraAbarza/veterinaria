@@ -46,10 +46,10 @@ public class MascotaData {
 
             if (rs.next()) {
                 mascota.setIdMascota(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Se registro la mascota correctamente");
+//                JOptionPane.showMessageDialog(null, "Se registro la mascota correctamente");
                 insc = true;
             } else {
-                JOptionPane.showMessageDialog(null, "No se pudo obtener el id luego de insertar una mascota");
+//                JOptionPane.showMessageDialog(null, "No se pudo obtener el id luego de insertar una mascota");
             }
             ps.close();
 
@@ -90,12 +90,12 @@ public class MascotaData {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error de conexion desde buscar mascota " + ex);
         }
-
-        if (mascota != null) {
-            JOptionPane.showMessageDialog(null, "Se encontró a la mascota " + mascota);
-        } else {
-            JOptionPane.showMessageDialog(null, "Error, no existe la mascota que intenta buscar");
-        }
+//
+//        if (mascota != null) {
+////            JOptionPane.showMessageDialog(null, "Se encontró a la mascota " + mascota);
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Error, no existe la mascota que intenta buscar");
+//        }
         return mascota;
     }
 
@@ -109,10 +109,10 @@ public class MascotaData {
             int rs = ps.executeUpdate();
 
             if (rs > 0) {
-                JOptionPane.showMessageDialog(null, "Se borró a la mascota ");
+//                JOptionPane.showMessageDialog(null, "Se borró a la mascota ");
                 borrar = true;
             } else {
-                JOptionPane.showMessageDialog(null, "Error, la mascota no existe ");
+//                JOptionPane.showMessageDialog(null, "Error, la mascota no existe ");
             }
             ps.close();
         } catch (SQLException ex) {
@@ -144,9 +144,9 @@ public class MascotaData {
 
             if (rs > 0) {
                 modificar = true;
-                JOptionPane.showMessageDialog(null, "Se modifico correctamente a la mascota " + mascota);
+//                JOptionPane.showMessageDialog(null, "Se modifico correctamente a la mascota " + mascota);
             } else {
-                JOptionPane.showMessageDialog(null, "Error, no se pudo modificar la mascota. La mascota que intenta modifcar no existe ");
+//                JOptionPane.showMessageDialog(null, "Error, no se pudo modificar la mascota. La mascota que intenta modifcar no existe ");
             }
             ps.close();
         } catch (SQLException ex) {
@@ -167,9 +167,9 @@ public class MascotaData {
 
             if (rs > 0) {
                 activar = true;
-                JOptionPane.showMessageDialog(null, "Se activo el estado de la mascota");
+//                JOptionPane.showMessageDialog(null, "Se activo el estado de la mascota");
             } else {
-                JOptionPane.showMessageDialog(null, "Error, la mascota no existe");
+//                JOptionPane.showMessageDialog(null, "Error, la mascota no existe");
             }
             ps.close();
 
@@ -214,12 +214,12 @@ public class MascotaData {
     }
 
     //LISTAS DE MASCOTAS DE UN DUENIO
-    public List<Mascota> obtenerMascotasPorDuenio(Cliente cliente) {
+    public List<Mascota> obtenerMascotasPorDuenio(int idCliente) {
         List<Mascota> mascotas = new ArrayList<Mascota>();
         try {
             String sql = "SELECT * FROM mascota WHERE activo=1 AND idCliente =?;";
             PreparedStatement ps = con.prepareStatement(sql);
-            ps.setInt(1, cliente.getIdCliente());
+            ps.setInt(1, idCliente);
             ResultSet rs = ps.executeQuery();
             Mascota mascota;
             while (rs.next()) {
@@ -243,6 +243,37 @@ public class MascotaData {
             System.out.println("Error al obtener las mascotas: " + ex.getMessage());
         }
 
+        return mascotas;
+    }
+
+    public List<Mascota> obtenerMascotasInativas() {
+        ArrayList<Mascota> mascotas = new ArrayList<Mascota>();
+
+        try {
+            String sql = "SELECT * FROM mascota WHERE activo=0;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            Mascota mascota;
+            while (rs.next()) {
+                mascota = new Mascota();
+                mascota.setIdMascota(rs.getInt("idMascota"));
+                mascota.setAlias(rs.getString("alias"));
+                mascota.setSexo(rs.getString("sexo"));
+                mascota.setEspecie(rs.getString("especie"));
+                mascota.setRaza(rs.getString("raza"));
+                mascota.setColorPelo(rs.getString("colorPelo"));
+                mascota.setFechaNac(rs.getDate("fechaNac").toLocalDate());
+//                mascota.setPesoMedio(rs.getDouble("pesoMedio"));
+//                mascota.setPesoActual(rs.getDouble("pesoActual"));
+                Cliente c = buscarCliente(rs.getInt("idCliente"));
+                mascota.setCliente(c);
+                mascota.setActivo(rs.getBoolean("activo"));
+                mascotas.add(mascota);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            System.out.println("Error al obtener las mascotas: " + ex.getMessage());
+        }
         return mascotas;
     }
 

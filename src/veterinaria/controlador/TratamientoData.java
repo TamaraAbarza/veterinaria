@@ -24,7 +24,7 @@ public class TratamientoData {
         }
     }
 
-    public boolean guardarTratamiento(Tratamiento tratamiento) {
+    public Tratamiento guardarTratamiento(Tratamiento tratamiento) {
         boolean aux = false;
         try {
             String sql = "INSERT INTO tratamiento (descripcion, medicamento, importe, tipoTratamiento, activo) VALUES ( ? , ? , ?, ?, ? );";
@@ -41,10 +41,10 @@ public class TratamientoData {
 
             if (rs.next()) {
                 tratamiento.setIdTratamiento(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Se guardó el tratamiento correctamente");
+//                JOptionPane.showMessageDialog(null, "Se guardó el tratamiento correctamente");
                 aux = true;
             } else {
-                JOptionPane.showMessageDialog(null, "No se pudo guardar el tratamiento");
+//                JOptionPane.showMessageDialog(null, "No se pudo guardar el tratamiento");
             }
             ps.close();
 
@@ -52,7 +52,7 @@ public class TratamientoData {
             JOptionPane.showMessageDialog(null, "Error de conexion desde guardar tratamiento: " + ex.getMessage());
         }
 
-        return aux;
+        return tratamiento;
     }
 
     public boolean bajaTratamiento(int idTratamiento) {
@@ -65,10 +65,10 @@ public class TratamientoData {
             int rs = ps.executeUpdate();
 
             if (rs > 0) {
-                JOptionPane.showMessageDialog(null, "Se dió de baja el tratamiento");
+//                JOptionPane.showMessageDialog(null, "Se dió de baja el tratamiento");
                 borrar = true;
             } else {
-                JOptionPane.showMessageDialog(null, "Error, el tratamiento ingresado no existe ");
+//                JOptionPane.showMessageDialog(null, "Error, el tratamiento ingresado no existe ");
             }
             ps.close();
         } catch (SQLException ex) {
@@ -87,7 +87,7 @@ public class TratamientoData {
             int rs = ps.executeUpdate();
 
             if (rs > 0) {
-                JOptionPane.showMessageDialog(null, "Se dió de alta el tratamiento");
+//                JOptionPane.showMessageDialog(null, "Se dió de alta el tratamiento");
                 aux = true;
             } else {
                 JOptionPane.showMessageDialog(null, "Error, el tratamiento que intenta dar de alta no existe ");
@@ -118,9 +118,9 @@ public class TratamientoData {
 
             if (rs > 0) {
                 modificar = true;
-                JOptionPane.showMessageDialog(null, "Se modifico correctamente el tratamiento ");
+//                JOptionPane.showMessageDialog(null, "Se modifico correctamente el tratamiento ");
             } else {
-                JOptionPane.showMessageDialog(null, "Error, no se pudo modificar el tratamiento.Verifique que el tratamiento que intenta ingresar corresponda a un tratamiento activo y existente");
+//                JOptionPane.showMessageDialog(null, "Error, no se pudo modificar el tratamiento.Verifique que el tratamiento que intenta ingresar corresponda a un tratamiento activo y existente");
             }
             ps.close();
         } catch (SQLException ex) {
@@ -158,47 +158,47 @@ public class TratamientoData {
         }
 
         if (tratamiento != null) {
-            JOptionPane.showMessageDialog(null, "Se encontró el tratamiento " + tratamiento);
+//            JOptionPane.showMessageDialog(null, "Se encontró el tratamiento " + tratamiento);
         } else {
-            JOptionPane.showMessageDialog(null, "Error, no existe el tratamiento que intenta buscar");
+//            JOptionPane.showMessageDialog(null, "Error, no existe el tratamiento que intenta buscar");
         }
         return tratamiento;
     }
   
-     public Tratamiento buscarTratamientoActivo(int idTratamiento) {
-        Tratamiento tratamiento = null;
-
-        String sql = "SELECT * FROM tratamiento WHERE activo =1 AND idTratamiento =?;";
-
-        try {
-            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, idTratamiento);
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                tratamiento = new Tratamiento();
-
-                tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
-                tratamiento.setDescripcion(rs.getString("descripcion"));
-                tratamiento.setMedicamento(rs.getString("medicamento"));
-                tratamiento.setImporte(rs.getDouble("importe"));
-                tratamiento.setTipoTratamiento(rs.getString("tipoTratamiento"));
-                tratamiento.setActivo(rs.getBoolean("activo"));
-            }
-            ps.close();
-
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error de conexion desde buscar tratamiento " + ex);
-        }
-
-        if (tratamiento != null) {
-            JOptionPane.showMessageDialog(null, "Se encontró el tratamiento " + tratamiento);
-        } else {
-            JOptionPane.showMessageDialog(null, "Error, no existe el tratamiento que intenta buscar");
-        }
-        return tratamiento;
-    }
+//     public Tratamiento buscarTratamientoActivo(int idTratamiento) {
+//        Tratamiento tratamiento = null;
+//
+//        String sql = "SELECT * FROM tratamiento WHERE activo =1 AND idTratamiento =?;";
+//
+//        try {
+//            PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+//            ps.setInt(1, idTratamiento);
+//
+//            ResultSet rs = ps.executeQuery();
+//
+//            while (rs.next()) {
+//                tratamiento = new Tratamiento();
+//
+//                tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
+//                tratamiento.setDescripcion(rs.getString("descripcion"));
+//                tratamiento.setMedicamento(rs.getString("medicamento"));
+//                tratamiento.setImporte(rs.getDouble("importe"));
+//                tratamiento.setTipoTratamiento(rs.getString("tipoTratamiento"));
+//                tratamiento.setActivo(rs.getBoolean("activo"));
+//            }
+//            ps.close();
+//
+//        } catch (SQLException ex) {
+//            JOptionPane.showMessageDialog(null, "Error de conexion desde buscar tratamiento " + ex);
+//        }
+//
+//        if (tratamiento != null) {
+//            JOptionPane.showMessageDialog(null, "Se encontró el tratamiento " + tratamiento);
+//        } else {
+//            JOptionPane.showMessageDialog(null, "Error, no existe el tratamiento que intenta buscar");
+//        }
+//        return tratamiento;
+//    }
     //LISTA
     public List<Tratamiento> obtenerTratamientos() {
         ArrayList <Tratamiento> tratamientos = new ArrayList <Tratamiento>();
@@ -221,7 +221,34 @@ public class TratamientoData {
             }
             ps.close();
         } catch (SQLException ex) {
-            System.out.println("Error al obtener la lista de tratamientos: " + ex.getMessage());
+          JOptionPane.showMessageDialog(null,"Error al obtener la lista de tratamientos: " + ex.getMessage());
+        }
+
+        return tratamientos;
+    }
+    
+     public List<Tratamiento> obtenerTratamientosInactivos() {
+        ArrayList <Tratamiento> tratamientos = new ArrayList <Tratamiento>();
+
+        try {
+            String sql = "SELECT * FROM tratamiento WHERE activo =0;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            Tratamiento tratamiento;
+            while (rs.next()) {
+                tratamiento= new Tratamiento();
+                
+                tratamiento.setIdTratamiento(rs.getInt("idTratamiento"));
+                tratamiento.setDescripcion(rs.getString("descripcion"));
+                tratamiento.setMedicamento(rs.getString("medicamento"));
+                tratamiento.setImporte(rs.getDouble("importe"));
+                tratamiento.setTipoTratamiento(rs.getString("tipoTratamiento"));
+                tratamiento.setActivo(rs.getBoolean("activo"));
+                tratamientos.add(tratamiento);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null,"Error al obtener la lista de tratamientos: " + ex.getMessage());
         }
 
         return tratamientos;
