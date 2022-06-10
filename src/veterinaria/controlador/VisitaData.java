@@ -45,11 +45,11 @@ public class VisitaData {
 
             if (rs.next()) {
                 visita.setIdVisita(rs.getInt(1));
-                JOptionPane.showMessageDialog(null, "Se guardó la visita correctamente");
+//                JOptionPane.showMessageDialog(null, "Se guardó la visita correctamente");
                 MascotaData md = new MascotaData(conexion);
                 aux = true;
             } else {
-                JOptionPane.showMessageDialog(null, "No se pudo guardar la visita");
+//                JOptionPane.showMessageDialog(null, "No se pudo guardar la visita");
             }
             ps.close();
 
@@ -71,10 +71,10 @@ public class VisitaData {
 
             int rs = ps.executeUpdate();
             if (rs > 0) {
-                JOptionPane.showMessageDialog(null, "Se borró la visita ");
+//                JOptionPane.showMessageDialog(null, "Se borró la visita ");
                 borrar = true;
             } else {
-                JOptionPane.showMessageDialog(null, "Error, no se pudo borrar la visita ");
+//                JOptionPane.showMessageDialog(null, "Error, no se pudo borrar la visita ");
             }
             ps.close();
 
@@ -103,9 +103,9 @@ public class VisitaData {
 
             if (rs > 0) {
                 modificar = true;
-                JOptionPane.showMessageDialog(null, "Se modifico correctamente la visita");
+//                JOptionPane.showMessageDialog(null, "Se modifico correctamente la visita");
             } else {
-                JOptionPane.showMessageDialog(null, "Error, no se pudo modificar la visita. La visita que intenta modifcar no existe ");
+//                JOptionPane.showMessageDialog(null, "Error, no se pudo modificar la visita. La visita que intenta modifcar no existe ");
             }
             ps.close();
         } catch (SQLException ex) {
@@ -118,7 +118,7 @@ public class VisitaData {
         List<Visita> visitas = new ArrayList<Visita>();
         try {
 
-            String sql = "SELECT * FROM visita ORDER BY fechaVisita ASC;";
+            String sql = "SELECT * FROM visita WHERE activo=1 ORDER BY fechaVisita ASC;";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             Visita visita;
@@ -178,6 +178,7 @@ public class VisitaData {
     public List<Visita> obtenerVisitasxTratamiento(String tipoTratamiento) {
         List<Visita> visitas = new ArrayList<Visita>();
         try {
+
             String sql = "SELECT * FROM visita, tratamiento WHERE visita.idTratamiento = tratamiento.idTratamiento AND tratamiento.tipoTratamiento LIKE ? ORDER BY fechaVisita ASC;";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setString(1, "%" + tipoTratamiento + "%");
@@ -210,7 +211,7 @@ public class VisitaData {
         List<Visita> visitas = new ArrayList<Visita>();
         try {
 
-            String sql = "SELECT * FROM visita WHERE activo=1 ORDER BY fechaVisita ASC;";
+            String sql = "SELECT * FROM visita, tratamiento WHERE visita.idTratamiento= tratamiento.idTratamiento AND tratamiento.activo=1 AND visita.activo= 1 ORDER BY fechaVisita ASC;";
             PreparedStatement ps = con.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             Visita visita;
@@ -223,7 +224,7 @@ public class VisitaData {
                 visita.setFechaVisita(rs.getDate("fechaVisita").toLocalDate());
                 visita.setDetalle(rs.getString("detalle"));
                 visita.setPeso(rs.getDouble("peso"));
-                visita.setTratamiento(buscarTratamientoActivo(rs.getInt("idTratamiento")));
+                visita.setTratamiento(buscarTratamiento(rs.getInt("idTratamiento")));
                 visita.setActivo(rs.getBoolean("activo"));
 
                 visitas.add(visita);
@@ -240,7 +241,7 @@ public class VisitaData {
         List<Visita> visitas = new ArrayList<Visita>();
         try {
 
-            String sql = "SELECT * FROM visita WHERE idMascota = ? AND activo=1  ORDER BY fechaVisita ASC;";
+            String sql = "SELECT * FROM visita, tratamiento WHERE visita.idTratamiento = tratamiento.idTratamiento AND visita.activo = 1 AND tratamiento.activo = 1 AND idMascota = ? ORDER BY fechaVisita ASC;";
             PreparedStatement ps = con.prepareStatement(sql);
             ps.setInt(1, idMascota);
             ResultSet rs = ps.executeQuery();
@@ -254,7 +255,7 @@ public class VisitaData {
                 visita.setFechaVisita(rs.getDate("fechaVisita").toLocalDate());
                 visita.setDetalle(rs.getString("detalle"));
                 visita.setPeso(rs.getDouble("peso"));
-                visita.setTratamiento(buscarTratamientoActivo((rs.getInt("idTratamiento"))));
+                visita.setTratamiento(buscarTratamiento((rs.getInt("idTratamiento"))));
                 visita.setActivo(rs.getBoolean("activo"));
 
                 visitas.add(visita);
@@ -275,11 +276,6 @@ public class VisitaData {
     public Tratamiento buscarTratamiento(int idTratamiento) {
         TratamientoData td = new TratamientoData(conexion);
         return td.buscarTratamiento(idTratamiento);
-    }
-
-    public Tratamiento buscarTratamientoActivo(int idTratamiento) {
-        TratamientoData td = new TratamientoData(conexion);
-        return td.buscarTratamientoActivo(idTratamiento);
     }
 
     //peso promedio
@@ -330,4 +326,133 @@ public class VisitaData {
         return peso;
 
     }
+
+    public List<Visita> obtenerVisitasxFecha(String fecha1, String fecha2) {
+        List<Visita> visitas = new ArrayList<Visita>();
+        try {
+            String sql = "SELECT * FROM visita WHERE fechaVisita>=? AND fechaVisita<=? ORDER BY fechaVisita ASC;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, fecha1);
+            ps.setString(2, fecha2);
+            ResultSet rs = ps.executeQuery();
+            Visita visita;
+
+            while (rs.next()) {
+                visita = new Visita();
+
+                visita.setIdVisita(rs.getInt("idVisita"));
+                visita.setMascota(buscarMascota(rs.getInt("idMascota")));
+                visita.setFechaVisita(rs.getDate("fechaVisita").toLocalDate());
+                visita.setDetalle(rs.getString("detalle"));
+                visita.setPeso(rs.getDouble("peso"));
+                visita.setTratamiento(buscarTratamiento((rs.getInt("idTratamiento"))));
+                visita.setActivo(rs.getBoolean("activo"));
+
+                visitas.add(visita);
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error desde obtener visitas por tratamiento: " + ex.getMessage());
+        }
+        return visitas;
+    }
+
+    public List<Visita> obtenerVisitasInactivas() {
+        List<Visita> visitas = new ArrayList<Visita>();
+        try {
+
+            String sql = "SELECT * FROM visita WHERE activo=0 ORDER BY fechaVisita ASC;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            Visita visita;
+
+            while (rs.next()) {
+                visita = new Visita();
+
+                visita.setIdVisita(rs.getInt("idVisita"));
+                visita.setMascota(buscarMascota(rs.getInt("idMascota")));
+                visita.setFechaVisita(rs.getDate("fechaVisita").toLocalDate());
+                visita.setDetalle(rs.getString("detalle"));
+                visita.setPeso(rs.getDouble("peso"));
+                visita.setTratamiento(buscarTratamiento(rs.getInt("idTratamiento")));
+                visita.setActivo(rs.getBoolean("activo"));
+
+                visitas.add(visita);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error desde obtener visitas: " + ex.getMessage());
+        }
+        return visitas;
+    }
+
+    public List<Visita> obtenerVisitasxTyF(String tipoTratamiento, String fecha1, String fecha2) {
+        List<Visita> visitas = new ArrayList<Visita>();
+        try {
+                                //SELECT * FROM visita,tratamiento WHERE visita.idTratamiento = tratamiento.idTratamiento AND tratamiento.tipoTratamiento LIKE "%vac%" AND fechaVisita >='2022-06-10' AND fechaVisita<='2022-06-11';
+            String sql = "SELECT * FROM visita, tratamiento WHERE visita.idTratamiento = tratamiento.idTratamiento AND tratamiento.tipoTratamiento LIKE ? AND fechaVisita>=? AND fechaVisita<=? ORDER BY fechaVisita ASC;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, "%" + tipoTratamiento + "%");
+            ps.setString(2, fecha1);
+            ps.setString(3, fecha2);
+
+            ResultSet rs = ps.executeQuery();
+            Visita visita;
+
+            while (rs.next()) {
+                visita = new Visita();
+
+                visita.setIdVisita(rs.getInt("idVisita"));
+                visita.setMascota(buscarMascota(rs.getInt("idMascota")));
+                visita.setFechaVisita(rs.getDate("fechaVisita").toLocalDate());
+                visita.setDetalle(rs.getString("detalle"));
+                visita.setPeso(rs.getDouble("peso"));
+                visita.setTratamiento(buscarTratamiento((rs.getInt("idTratamiento"))));
+                visita.setActivo(rs.getBoolean("activo"));
+
+                visitas.add(visita);
+            }
+            ps.close();
+
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error desde obtener visitas por tratamiento: " + ex.getMessage());
+        }
+
+        return visitas;
+    }
+    
+    
+     public List<Visita> visitasTratamientoInactivo() {
+        List<Visita> visitas = new ArrayList<Visita>();
+        try {
+
+            String sql = "SELECT * FROM visita, tratamiento WHERE visita.idTratamiento= tratamiento.idTratamiento AND tratamiento.activo=0;";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            Visita visita;
+
+            while (rs.next()) {
+                visita = new Visita();
+
+                visita.setIdVisita(rs.getInt("idVisita"));
+                visita.setMascota(buscarMascota(rs.getInt("idMascota")));
+                visita.setFechaVisita(rs.getDate("fechaVisita").toLocalDate());
+                visita.setDetalle(rs.getString("detalle"));
+                visita.setPeso(rs.getDouble("peso"));
+                visita.setTratamiento(buscarTratamiento(rs.getInt("idTratamiento")));
+                visita.setActivo(rs.getBoolean("activo"));
+
+                visitas.add(visita);
+            }
+            ps.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error desde obtener visitas: " + ex.getMessage());
+        }
+
+        return visitas;
+    }
+     public void altaVisita(int idVisita){
+         
+     }
 }
