@@ -113,7 +113,7 @@ public class Mascota {
 
     @Override
     public String toString() {
-        return   "mascota: "+alias + ", cliente: " + cliente;
+        return   alias;
     }
 
     
