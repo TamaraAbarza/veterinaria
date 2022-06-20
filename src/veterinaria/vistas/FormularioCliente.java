@@ -36,7 +36,8 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
             Logger.getLogger(FormularioCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-     public FormularioCliente(int dni) {
+
+    public FormularioCliente(int dni) {
 
         try {
             conexion = new Conexion();
@@ -44,12 +45,12 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
             initComponents();
             btnBorrar.setEnabled(false);
             btnModificar.setEnabled(false);
-            jtDni.setText(dni+"");
+            jtDni.setText(dni + "");
             jtDniBuscar.setEnabled(false);
             btnBuscar.setEnabled(false);
             jLabel.setEnabled(false);
             jLabelRegistrar.setText("REGISTRE UN NUEVO CLIENTE");
-                    
+
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(FormularioCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -476,7 +477,7 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
                 Cliente cliente = new Cliente(dni, nombre, apellido, telefono, direccion, contacto, activo);
                 boolean aux = clienteData.guardarCliente(cliente);
                 if (aux) {
-                    int confirmar = JOptionPane.showConfirmDialog(this,  "Se registró al cliente correctamente. ¿Desea agregar una mascota para "+cliente+"?" );
+                    int confirmar = JOptionPane.showConfirmDialog(this, "Se registró al cliente correctamente. ¿Desea agregar una mascota para " + cliente + "?");
                     if (confirmar == 0) {
                         FormularioMascota fm = new FormularioMascota();
                         Principal.fondo.add(fm);
@@ -485,10 +486,7 @@ public class FormularioCliente extends javax.swing.JInternalFrame {
                         this.dispose();
                     }
                     limpiar();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Ocurrió un error al intentar registrar al cliente " + cliente);
                 }
-
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Para realizar el registro es necesario que complete todos los campos.");

@@ -51,7 +51,7 @@ public class ClienteData {
             ps.close();
         } catch (SQLException ex) {
             insert=false;
-                JOptionPane.showMessageDialog(null, "Error. El dni ingresado ya existe, corresponde al cliente " + cliente+ ": "+ex);
+                JOptionPane.showMessageDialog(null, "Error. El dni ingresado ya está registrado. Ingrese un dni válido ");
         }
         return insert;
     }

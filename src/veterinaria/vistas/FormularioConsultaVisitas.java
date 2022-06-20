@@ -420,7 +420,7 @@ public class FormularioConsultaVisitas extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -505,9 +505,13 @@ public class FormularioConsultaVisitas extends javax.swing.JInternalFrame {
         DefaultTableModel modelo = (DefaultTableModel) jTableMascota.getModel();
         modelo.setRowCount(0);
         Mascota m = (Mascota) jcbMascota.getSelectedItem();
-        double pActual = visitaData.PesoActual(m.getIdMascota());
-        double pMedio = visitaData.calcularPesoMedio(m.getIdMascota());
-        modelo.addRow(new Object[]{m.getCliente(),m.getAlias(),m.getSexo(), m.getEspecie(), m.getRaza(), m.getColorPelo(), pActual, pMedio, m.getFechaNac()});
+        String pActual="", pMedio="";
+        if (!visitas.isEmpty()) {
+            pActual = visitaData.PesoActual(m.getIdMascota()) + "";
+            pMedio = visitaData.calcularPesoMedio(m.getIdMascota()) + "";
+        }
+
+        modelo.addRow(new Object[]{m.getCliente(), m.getAlias(), m.getSexo(), m.getEspecie(), m.getRaza(), m.getColorPelo(), pActual, pMedio, m.getFechaNac()});
     }
 
     public void cargarTablaVisita(List<Visita> v) {
@@ -521,7 +525,7 @@ public class FormularioConsultaVisitas extends javax.swing.JInternalFrame {
             String descripcion = it.getTratamiento().getDescripcion();
             String medicamento = it.getTratamiento().getMedicamento();
             double importe = it.getTratamiento().getImporte();
-            modelo.addRow(new Object[]{it.getMascota().getAlias(),fecha, detalle, peso, tipoT, descripcion, medicamento, importe});
+            modelo.addRow(new Object[]{it.getMascota().getAlias(), fecha, detalle, peso, tipoT, descripcion, medicamento, importe});
         }
     }
 
